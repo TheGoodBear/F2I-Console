@@ -19,11 +19,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleClock", "ConsoleCloc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRace", "CarRace\CarRace.csproj", "{8C525BE4-0792-437D-89DD-49F4603CF624}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarRaceV2", "CarRaceV2\CarRaceV2.csproj", "{BF778621-E5A7-497A-B9F3-F1B21CE9C45A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarRaceV2", "CarRaceV2\CarRaceV2.csproj", "{BF778621-E5A7-497A-B9F3-F1B21CE9C45A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManagement", "FileManagement\FileManagement.csproj", "{D6CC0B4A-8F88-4DEA-AE1C-09720A4999C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagement", "FileManagement\FileManagement.csproj", "{D6CC0B4A-8F88-4DEA-AE1C-09720A4999C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileManagementV2", "FileManagementV2\FileManagementV2.csproj", "{4CF0D8FC-E64E-48A2-8A30-B7944CAF380A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileManagementV2", "FileManagementV2\FileManagementV2.csproj", "{4CF0D8FC-E64E-48A2-8A30-B7944CAF380A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FD1F84B5-FA5D-4823-8913-639B7AD64536}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
