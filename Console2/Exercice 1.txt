@@ -1,0 +1,11 @@
+﻿Continuer l'application Console 2
+
+- Demander à l'utilisateur son année de naissance
+- Lui redemander tant que 
+	l'année est inférieure à 1800 
+	ou supérieure à l'année actuelle 
+- Lorsqu'on lui dit bonjour, afficher son âge en même temps
+
+Exemple :
+Entrées : Alain / 1967
+Sortie : Bonjour Alain, tu as 55 ans.

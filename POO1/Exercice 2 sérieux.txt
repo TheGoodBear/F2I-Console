@@ -1,0 +1,18 @@
+﻿Objectif
+--------
+
+Simuler un salon automobile.
+
+
+Spécifications:
+
+- créer une dizaines de véhicules différents dans le programme
+- demander combien de véhicules (2 à 10) participent au salon
+- chaque véhicule se voit attribué un numéro unique, on peut trouver plusieurs fois le même type de véhicule, chaque participant est tiré au hasard parmi les véhicules disponibles
+- demander combien de jours dure le salon (entre 1 et 10)
+
+- placer les véhicules dans le salon
+- chaque jour, le salon accueille un nombre aléatoire de visiteurs, chaque visiteur attribue une note préférentielle à chaque véhicule
+- chaque jour, afficher les véhicules les mieux notés dans l'ordre croissant
+- à la fin du salon afficher le détail complet des 3 véhicules les plus plébiscités sous forme d'un tableau
+

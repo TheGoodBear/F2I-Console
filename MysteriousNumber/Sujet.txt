@@ -1,0 +1,21 @@
+﻿Programmer un jeu du nombre mystérieux
+--------------------------------------
+
+L'objectif est de deviner un nombre aléatoire entre 1 et 100 en un minimum de coups.
+
+Spécifications :
+- Au démarrage de l'application on affiche un titre pour le jeu
+- On présente les règles
+- On demande au joueur son nom
+- On vérifie que ce nom soit valide :
+	- un texte d'au moins 3 caractères de long
+	- pas de nombre
+- On tire un nombre aléatoire compris entre 1 et 100 inclus
+- Tant que le joueur n'a pas deviné le nombre mystérieux
+	- On lui demande de saisir un nombre
+	- On affiche si le nombre saisi est inférieur ou supérieur au nombre mystérieux
+- Une fois qu'il a trouvé le nombre on lui dit qu'il a gagné et on précise en combien de coups
+- On lui demande s'il veut refaire une partie
+	- Si oui on retourne au tirage d'un nouveau nombre
+	- Si non on lui dit Au revoir
+

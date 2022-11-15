@@ -1,0 +1,22 @@
+﻿Objectif
+--------
+
+Simuler une course de véhicules.
+
+
+Spécifications:
+
+- créer une dizaines de véhicules différents dans le programme
+- demander combien de véhicules (2 à 10) participent à la course
+- chaque véhicule se voit attribué un numéro unique, on peut trouver plusieurs fois le même type de véhicule, chaque participant est tiré au hasard parmi les véhicules disponibles
+- demander la longueur de la course (par exemple entre 10 et 1000km)
+
+- placer les véhicules sur la ligne de départ
+- à chaque tour de jeu, les véhicules avancent d'une certaine distance tirée aléatoirement en rapport avec leur puissance
+- à chaque tour, afficher les véhicules par distance parcourue croissante (en précisant la distance parcourue)
+- lorsqu'un véhicule franchi la ligne d'arrivée, il arrête d'avancer
+- une fois que tous les véhicules ont passés la ligne d'arrivée, afficher le palmarès par ordre d'arrivée
+
+Bonus:
+
+Simuler graphiquement la course
