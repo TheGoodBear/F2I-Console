@@ -1,0 +1,29 @@
+﻿
+Objectifs
+---------
+
+1 - Pouvoir conserver le résultats des courses passées
+
+2 - Pouvoir afficher l'historique des dernières courses à l'utilisateur
+
+3 (avancé) - Pouvoir rejouer une course passée exactement telle qu'elle
+
+
+Spécifications
+--------------
+
+1 - A la fin de chaque course, conserver dans un fichier spécifique (nommé intelligement) le podium de la course
+  - Sauvegarder les fichiers dans un dossier spécifique du projet (pas à la racine du projet)
+
+2 - Au lancement de l'application, ajouter un menu principal qui propose 3 choix à l'utilisateur : 
+		1) lancer une nouvelle course (ce que fait actuellement le programme)
+		2) voir l'historique des courses sauvegardées
+		3) quitter le programme
+  - Lorsque l'utilisateur choisi de voir l'historique des courses, on lui propose de voir le détail d'une course ou de revenir au menu principal
+  - Pour que l'utilisateur puisse choisir une course à visualiser en détail, on lui affiche toutes les courses sauvegardées (de la plus récente à la plus ancienne) avec le nombre de participants et la longueur de la course, accompagnées d'un numéro d'ordre pour qu'il puisse en choisir une
+  - en fin de course, ou après avoir visualisé une course sauvegardée, on retourne au menu principal
+
+  3 (avancé) - Cette fois-ci il faut sauvegarder l'intégralité des étapes de la course et plus seulement le podium final
+    - une nouvelle option est proposé dans le menu principal : rejouer une course sauvegardée
+	- lorsqu'une course est sélectionnée, on fait comme s'il s'agissait d'une nouvelle course (sauf qu'on ne demande pas le nombre de participants ni la longueur) et on rejoue l'intégralité de la course grâce aux informations du fichier
+	- bien entendu, à la fin d'une courses rejouée, on ne sauve pas à nouveau le résultat
