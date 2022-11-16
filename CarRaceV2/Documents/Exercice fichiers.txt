@@ -23,7 +23,7 @@ Spécifications
   - Pour que l'utilisateur puisse choisir une course à visualiser en détail, on lui affiche toutes les courses sauvegardées (de la plus récente à la plus ancienne) avec le nombre de participants et la longueur de la course, accompagnées d'un numéro d'ordre pour qu'il puisse en choisir une
   - en fin de course, ou après avoir visualisé une course sauvegardée, on retourne au menu principal
 
-  3 (avancé) - Cette fois-ci il faut sauvegarder l'intégralité des étapes de la course et plus seulement le podium final
+3 (avancé) - Cette fois-ci il faut sauvegarder l'intégralité des étapes de la course et plus seulement le podium final
     - une nouvelle option est proposé dans le menu principal : rejouer une course sauvegardée
 	- lorsqu'une course est sélectionnée, on fait comme s'il s'agissait d'une nouvelle course (sauf qu'on ne demande pas le nombre de participants ni la longueur) et on rejoue l'intégralité de la course grâce aux informations du fichier
 	- bien entendu, à la fin d'une courses rejouée, on ne sauve pas à nouveau le résultat

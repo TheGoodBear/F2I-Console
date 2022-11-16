@@ -78,39 +78,49 @@ namespace FileManagement
 
         private static void ListData(List<Person> MyList)
         {
-            MyList = MyList
-                .OrderBy(S => S.LastName)
-                .OrderBy(S => (int)S.ITLevel).ToList();
+            Console.WriteLine("\nListe des étudiants par groupe :");
 
+            MyList = MyList
+                .OrderBy(S => (int)S.ITLevel)
+                .OrderBy(S => S.GroupNumber)
+                .ToList();
+
+            int CurrentGroup = 0;
             foreach (Person CurrentPerson in MyList)
             {
+                string Prefix = (CurrentPerson.GroupNumber == CurrentGroup ? "" : "\n");
+                CurrentGroup = CurrentPerson.GroupNumber;
+
                 Console.WriteLine(
+                    $"{Prefix}" +
                     $"{CurrentPerson.FirstName} " +
                     $"{CurrentPerson.LastName} " +
                     $"de sexe {CurrentPerson.Sex} " +
                     $"né(e) en {CurrentPerson.BirthYear} " +
                     $"de niveau {CurrentPerson.ITLevel} " +
                     $"est dans le groupe {CurrentPerson.GroupNumber}");
+
+
             }
         }
 
         private static void InitializeData()
         {
             //Persons.Add(new Person("Micalaudie", "Alain", "M", 1967));
-            Persons.Add(new Person("Audisso", "Julien", "M", 1985, Person.eITLevel.Intermédiaire, 0));
-            Persons.Add(new Person("Moniz", "David", "M", 1996, Person.eITLevel.Intermédiaire, 0));
-            Persons.Add(new Person("Ibombo", "Borel", "M", 2001, Person.eITLevel.Intermédiaire, 0));
-            Persons.Add(new Person("Velin", "Daïka", "F", 1989, Person.eITLevel.Débutant, 0));
-            Persons.Add(new Person("Chaieb", "Rania", "F", 1996, Person.eITLevel.Intermédiaire, 0));
-            Persons.Add(new Person("Ghaem", "Hamid", "M", 1963, Person.eITLevel.Intermédiaire, 0));
-            Persons.Add(new Person("Hijazi", "Samer", "M", 1972, Person.eITLevel.Intermédiaire, 0));
-            Persons.Add(new Person("Molla", "Jean-Pierre", "M", 1984, Person.eITLevel.Avancé, 0));
-            Persons.Add(new Person("Lependu", "Thierry", "M", 1995, Person.eITLevel.Avancé, 0));
-            Persons.Add(new Person("Diaby", "Alhousseny", "M", 2000, Person.eITLevel.Intermédiaire, 0));
-            Persons.Add(new Person("Sadat", "Lyes", "M", 1987, Person.eITLevel.Débutant, 0));
-            Persons.Add(new Person("Haj kacem", "Slim", "M", 1986, Person.eITLevel.Avancé, 0));
-            Persons.Add(new Person("Aliouchouche", "Tarek", "M", 1971, Person.eITLevel.Intermédiaire, 0));
-            Persons.Add(new Person("Ait Ben Ahmed", "Mohamed", "M", 1986, Person.eITLevel.Intermédiaire, 0));
+            Persons.Add(new Person("Audisso", "Julien", "M", 1985, Person.eITLevel.Intermédiaire, 2));
+            Persons.Add(new Person("Moniz", "David", "M", 1996, Person.eITLevel.Intermédiaire, 1));
+            Persons.Add(new Person("Ibombo", "Borel", "M", 2001, Person.eITLevel.Intermédiaire, 5));
+            Persons.Add(new Person("Velin", "Daïka", "F", 1989, Person.eITLevel.Débutant, 1));
+            Persons.Add(new Person("Chaieb", "Rania", "F", 1996, Person.eITLevel.Intermédiaire, 1));
+            Persons.Add(new Person("Ghaem", "Hamid", "M", 1963, Person.eITLevel.Intermédiaire, 4));
+            Persons.Add(new Person("Hijazi", "Samer", "M", 1972, Person.eITLevel.Intermédiaire, 4));
+            Persons.Add(new Person("Molla", "Jean-Pierre", "M", 1984, Person.eITLevel.Avancé, 2));
+            Persons.Add(new Person("Lependu", "Thierry", "M", 1995, Person.eITLevel.Avancé, 3));
+            Persons.Add(new Person("Diaby", "Alhousseny", "M", 2000, Person.eITLevel.Intermédiaire, 5));
+            Persons.Add(new Person("Sadat", "Lyes", "M", 1987, Person.eITLevel.Débutant, 3));
+            Persons.Add(new Person("Haj kacem", "Slim", "M", 1986, Person.eITLevel.Avancé, 4));
+            Persons.Add(new Person("Aliouchouche", "Tarek", "M", 1971, Person.eITLevel.Intermédiaire, 2));
+            Persons.Add(new Person("Ait Ben Ahmed", "Mohamed", "M", 1986, Person.eITLevel.Intermédiaire, 5));
         }
     }
 }
