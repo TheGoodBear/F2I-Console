@@ -278,10 +278,7 @@ namespace CarRaceV3
                         (ConsoleColor)Enum.Parse(
                             typeof(ConsoleColor), 
                             RacerData[3]);
-
-                    //RacerData[3] = "5";
-                    //int EnumIndex = Array.IndexOf(Enum.GetValues(typeof(ConsoleColor)), RacerData[3]);
-                    //Console.ForegroundColor = (ConsoleColor)(Enum.GetValues(typeof(ConsoleColor)).GetValue(EnumIndex));
+                    //Console.ForegroundColor = (ConsoleColor)Convert.ToInt32(RacerData[3]);
 
                     Console.WriteLine($"{RacerData[0]} → {RacerData[1]} {RacerData[2]} de {RacerData[4]}cv");
                     Racer = MyStream2.ReadLine();
