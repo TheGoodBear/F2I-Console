@@ -1,14 +1,18 @@
-﻿using System.Text;
+﻿using System.Reflection;
+using System.Text;
 
 namespace FileManagement
 {
     internal class Program
     {
 
-        public static string FilePath =
-            "C:\\Users\\FORMATEUR\\Documents\\F2I\\";
-        public static string FileName =
-            "FileManagement1.csv";
+        //public static string FilePath =
+        //    "C:\\Users\\FORMATEUR\\Documents\\F2I\\";
+        static string AssemblyPath = Path.GetDirectoryName(
+            Assembly.GetExecutingAssembly().Location);
+        static string FilePath = Path.Combine(AssemblyPath, "Data");
+        public static string FileName = "POECProjects.csv";
+
         public static List<Person> Persons = new List<Person>();
         public static List<Person> Students = new List<Person>();
 
@@ -38,10 +42,13 @@ namespace FileManagement
                     MyStream.WriteLine(
                         $"{CurrentPerson.LastName};" +
                         $"{CurrentPerson.FirstName};" +
-                        $"{CurrentPerson.Sex};" +
+                        $"{(int)CurrentPerson.Sex};" +
                         $"{CurrentPerson.BirthYear};" +
                         $"{(int)CurrentPerson.ITLevel};" +
-                        $"{CurrentPerson.GroupNumber}");
+                        $"{(int)CurrentPerson.Location};" +
+                        $"{CurrentPerson.GroupNumber};" +
+                        $"{CurrentPerson.ProjectName};" +
+                        $"{(int)CurrentPerson.Technology}");
                 }
             }
 
@@ -64,10 +71,13 @@ namespace FileManagement
                     Students.Add(new Person(
                         StudentData[0],
                         StudentData[1],
-                        StudentData[2],
+                        (Person.eSex)Convert.ToInt32(StudentData[2]),
                         Convert.ToInt32(StudentData[3]),
                         (Person.eITLevel)Convert.ToInt32(StudentData[4]),
-                        Convert.ToInt32(StudentData[5])));
+                        (Person.eLocation)Convert.ToInt32(StudentData[5]),
+                        Convert.ToInt32(StudentData[6]),
+                        StudentData[7],
+                        (Person.eTechnology)Convert.ToInt32(StudentData[8])));
                     Result = MyStream.ReadLine();
                 }
             }
@@ -88,39 +98,55 @@ namespace FileManagement
             int CurrentGroup = 0;
             foreach (Person CurrentPerson in MyList)
             {
-                string Prefix = (CurrentPerson.GroupNumber == CurrentGroup ? "" : "\n");
-                CurrentGroup = CurrentPerson.GroupNumber;
+                //string Prefix = (CurrentPerson.GroupNumber == CurrentGroup ? "" : "\n");
+                //CurrentGroup = CurrentPerson.GroupNumber;
+
+                //Console.WriteLine(
+                //    $"{Prefix}" +
+                //    $"{CurrentPerson.FirstName} " +
+                //    $"{CurrentPerson.LastName} " +
+                //    $"de sexe {CurrentPerson.Sex} " +
+                //    $"né(e) en {CurrentPerson.BirthYear} " +
+                //    $"de niveau {CurrentPerson.ITLevel} " +
+                //    $"est dans le groupe {CurrentPerson.GroupNumber}");
+
+                if (CurrentPerson.GroupNumber != CurrentGroup)
+                {
+                    Console.WriteLine(
+                        $"\n" +
+                        $"Groupe {CurrentPerson.GroupNumber} " +
+                        $"- Projet : {CurrentPerson.ProjectName} " +
+                        $"({CurrentPerson.Technology})");
+                    CurrentGroup = CurrentPerson.GroupNumber;
+                }
 
                 Console.WriteLine(
-                    $"{Prefix}" +
                     $"{CurrentPerson.FirstName} " +
                     $"{CurrentPerson.LastName} " +
-                    $"de sexe {CurrentPerson.Sex} " +
-                    $"né(e) en {CurrentPerson.BirthYear} " +
-                    $"de niveau {CurrentPerson.ITLevel} " +
-                    $"est dans le groupe {CurrentPerson.GroupNumber}");
-
-
+                    $"({CurrentPerson.Sex}, " +
+                    $"{CurrentPerson.Age} ans), " +
+                    $"niveau {CurrentPerson.ITLevel} " +
+                    $"({CurrentPerson.Location})");
             }
         }
 
         private static void InitializeData()
         {
             //Persons.Add(new Person("Micalaudie", "Alain", "M", 1967));
-            Persons.Add(new Person("Audisso", "Julien", "M", 1985, Person.eITLevel.Intermédiaire, 2));
-            Persons.Add(new Person("Moniz", "David", "M", 1996, Person.eITLevel.Intermédiaire, 1));
-            Persons.Add(new Person("Ibombo", "Borel", "M", 2001, Person.eITLevel.Intermédiaire, 5));
-            Persons.Add(new Person("Velin", "Daïka", "F", 1989, Person.eITLevel.Débutant, 1));
-            Persons.Add(new Person("Chaieb", "Rania", "F", 1996, Person.eITLevel.Intermédiaire, 1));
-            Persons.Add(new Person("Ghaem", "Hamid", "M", 1963, Person.eITLevel.Intermédiaire, 4));
-            Persons.Add(new Person("Hijazi", "Samer", "M", 1972, Person.eITLevel.Intermédiaire, 4));
-            Persons.Add(new Person("Molla", "Jean-Pierre", "M", 1984, Person.eITLevel.Avancé, 2));
-            Persons.Add(new Person("Lependu", "Thierry", "M", 1995, Person.eITLevel.Avancé, 3));
-            Persons.Add(new Person("Diaby", "Alhousseny", "M", 2000, Person.eITLevel.Intermédiaire, 5));
-            Persons.Add(new Person("Sadat", "Lyes", "M", 1987, Person.eITLevel.Débutant, 3));
-            Persons.Add(new Person("Haj kacem", "Slim", "M", 1986, Person.eITLevel.Avancé, 4));
-            Persons.Add(new Person("Aliouchouche", "Tarek", "M", 1971, Person.eITLevel.Intermédiaire, 2));
-            Persons.Add(new Person("Ait Ben Ahmed", "Mohamed", "M", 1986, Person.eITLevel.Intermédiaire, 5));
+            Persons.Add(new Person("Audisso", "Julien", Person.eSex.Masculin, 1985, Person.eITLevel.Intermédiaire, Person.eLocation.Présentiel, 1, "Site de e-Commerce", Person.eTechnology.ASPNetMVC));
+            Persons.Add(new Person("Moniz", "David", Person.eSex.Masculin, 1996, Person.eITLevel.Intermédiaire, Person.eLocation.Présentiel, 4, "Programme de fitness", Person.eTechnology.ASPNetMVC));
+            Persons.Add(new Person("Ibombo", "Borel", Person.eSex.Masculin, 2001, Person.eITLevel.Intermédiaire, Person.eLocation.Présentiel, 5, "Simulateur de trains", Person.eTechnology.ASPNetMVC));
+            Persons.Add(new Person("Velin", "Daïka", Person.eSex.Féminin, 1989, Person.eITLevel.Débutant, Person.eLocation.Présentiel, 4, "Programme de fitness", Person.eTechnology.ASPNetMVC));
+            Persons.Add(new Person("Chaieb", "Rania", Person.eSex.Féminin, 1996, Person.eITLevel.Intermédiaire, Person.eLocation.Distanciel, 4, "Programme de fitness", Person.eTechnology.ASPNetMVC));
+            Persons.Add(new Person("Ghaem", "Hamid", Person.eSex.Masculin, 1963, Person.eITLevel.Intermédiaire, Person.eLocation.Présentiel, 2, "Gestion de centre de formation", Person.eTechnology.ASPNetMVC));
+            Persons.Add(new Person("Hijazi", "Samer", Person.eSex.Masculin, 1972, Person.eITLevel.Intermédiaire, Person.eLocation.Présentiel, 2, "Gestion de centre de formation", Person.eTechnology.ASPNetMVC));
+            Persons.Add(new Person("Molla", "Jean-Pierre", Person.eSex.Masculin, 1984, Person.eITLevel.Avancé, Person.eLocation.Présentiel, 1, "Site de e-Commerce", Person.eTechnology.ASPNetMVC));
+            Persons.Add(new Person("Lependu", "Thierry", Person.eSex.Masculin, 1995, Person.eITLevel.Avancé, Person.eLocation.Présentiel, 3, "", Person.eTechnology.None));
+            Persons.Add(new Person("Diaby", "Alhousseny", Person.eSex.Masculin, 2000, Person.eITLevel.Intermédiaire, Person.eLocation.Présentiel, 5, "Simulateur de trains", Person.eTechnology.ASPNetMVC));
+            Persons.Add(new Person("Sadat", "Lyes", Person.eSex.Masculin, 1987, Person.eITLevel.Débutant, Person.eLocation.Présentiel, 3, "", Person.eTechnology.None));
+            Persons.Add(new Person("Haj kacem", "Slim", Person.eSex.Masculin, 1986, Person.eITLevel.Avancé, Person.eLocation.Présentiel, 2, "Gestion de centre de formation", Person.eTechnology.None));
+            Persons.Add(new Person("Aliouchouche", "Tarek", Person.eSex.Masculin, 1971, Person.eITLevel.Intermédiaire, Person.eLocation.Présentiel, 1, "Site de e-Commerce", Person.eTechnology.ASPNetMVC));
+            Persons.Add(new Person("Ait Ben Ahmed", "Mohamed", Person.eSex.Masculin, 1986, Person.eITLevel.Intermédiaire, Person.eLocation.Présentiel, 5, "Simulateur de trains", Person.eTechnology.ASPNetMVC));
         }
     }
 }
