@@ -30,6 +30,7 @@ namespace CarRaceV3
         const int SpeedRandomFactor = 10;
         static List<Vehicle> Vehicles = new List<Vehicle>();
         static List<Vehicle> Racers = new List<Vehicle>();
+        static List<Tuple<int, int>> RaceLog = new List<Tuple<int, int>>();
         static Random rnd = new Random();
 
         public static void Main()
@@ -42,7 +43,7 @@ namespace CarRaceV3
             bool StopProgram = false;
             while (!StopProgram)
                 StopProgram = MainMenu();
-                
+
             // fin du programme
             Console.SetCursorPosition(0, 32);
             Console.WriteLine("Entrée pour terminer.");
@@ -99,7 +100,7 @@ namespace CarRaceV3
                 "Fais ton choix : ",
                 HighestValue: 2);
 
-            if (UserChoice == 1) 
+            if (UserChoice == 1)
             {
                 PrepareRace();
                 DrawTrack(NumberOfRacers, OriginY: TrackLineOrigin);
@@ -107,11 +108,11 @@ namespace CarRaceV3
                 RaceInProgress();
                 RaceFinished();
             }
-            else if (UserChoice == 2) 
+            else if (UserChoice == 2)
             {
                 ViewHistory();
             }
-            else if (UserChoice == 0) 
+            else if (UserChoice == 0)
             {
                 StopProgram = true;
             }
@@ -139,7 +140,7 @@ namespace CarRaceV3
             for (int Nb = 1; Nb <= NumberOfRacers; Nb++)
             {
                 Vehicle Racer = Vehicles[rnd.Next(0, Vehicles.Count)];
-                Racers.Add(new Vehicle(Racer));               
+                Racers.Add(new Vehicle(Racer));
             }
 
             // demander la longueur de la course
@@ -174,6 +175,12 @@ namespace CarRaceV3
             Console.WriteLine($"\nLes {Racers.Count} concurrents sont sur la ligne de départ... Entrée pour démarrer la course.");
             Console.ReadLine();
 
+            // ajouter chaque véhicule au départ dans le log
+            foreach (Vehicle Racer in Racers)
+            {
+                RaceLog.Add(new Tuple<int, int>(Racer.UniqueNumberInRace, 0));
+            }
+
             int Round = 0;
             int ArrivedRacers = 0;
             while (ArrivedRacers < Racers.Count)
@@ -189,6 +196,9 @@ namespace CarRaceV3
                         if (Racer.Move(rnd, SpeedRandomFactor, RaceLength))
                             ArrivedRacers++;
                     }
+
+                    // ajoute les informations de chaque véhicule dans le log
+                    RaceLog.Add(new Tuple<int, int>(Racer.UniqueNumberInRace, Racer.DistanceFromOrigin));
                 }
 
                 // attendre le prochain tour
@@ -217,9 +227,13 @@ namespace CarRaceV3
                 Racer.DisplayData(true, true);
             }
 
-            // save podium to file in Save folder
-            string FileName = $"Race-{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.csv";
-            Utilities.WriteFile(FilePath, FileName, Racers, RaceLength);
+            // save podium and log to files in Save folder
+            string FileName = $"Race-{DateTime.Now.ToString("yyyyMMdd-HHmmss")}";
+            Utilities.WriteFiles(FilePath, FileName, Racers, RaceLength, RaceLog);
+
+            //// save race log in save folder
+            //FileName = $"Race-{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log";
+            //Utilities.WriteFile(FilePath, FileName, RaceLog, Racers.Count, RaceLength, true);
         }
 
         private static void ViewHistory()
@@ -231,7 +245,7 @@ namespace CarRaceV3
                 .OrderByDescending(s => Path.GetFileName(s))
                 .ToArray();
 
-            if (OldRaces.Length == 0) 
+            if (OldRaces.Length == 0)
             {
                 Console.WriteLine("\nIl n'y a aucune course à voir.");
                 Console.WriteLine("\nEntrée pour revenir au menu");
@@ -242,7 +256,7 @@ namespace CarRaceV3
             Console.Clear();
             Console.WriteLine("\nListe des courses sauvegardées :");
             int FileNumber = 1;
-            foreach (string OldRace in OldRaces) 
+            foreach (string OldRace in OldRaces)
             {
                 string OldRaceName = Path.GetFileName(OldRace);
 
@@ -275,9 +289,9 @@ namespace CarRaceV3
                 while (Racer != null)
                 {
                     string[] RacerData = Racer.Split(";");
-                    Console.ForegroundColor = 
+                    Console.ForegroundColor =
                         (ConsoleColor)Enum.Parse(
-                            typeof(ConsoleColor), 
+                            typeof(ConsoleColor),
                             RacerData[3]);
                     //Console.ForegroundColor = (ConsoleColor)Convert.ToInt32(RacerData[3]);
 
@@ -315,7 +329,4 @@ namespace CarRaceV3
         }
     }
 
-
-
 }
- 

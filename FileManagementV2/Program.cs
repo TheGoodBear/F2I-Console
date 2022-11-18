@@ -141,10 +141,10 @@ namespace FileManagement
             Persons.Add(new Person("Ghaem", "Hamid", Person.eSex.Masculin, 1963, Person.eITLevel.Intermédiaire, Person.eLocation.Présentiel, 2, "Gestion de centre de formation", Person.eTechnology.ASPNetMVC));
             Persons.Add(new Person("Hijazi", "Samer", Person.eSex.Masculin, 1972, Person.eITLevel.Intermédiaire, Person.eLocation.Présentiel, 2, "Gestion de centre de formation", Person.eTechnology.ASPNetMVC));
             Persons.Add(new Person("Molla", "Jean-Pierre", Person.eSex.Masculin, 1984, Person.eITLevel.Avancé, Person.eLocation.Présentiel, 1, "Site de e-Commerce", Person.eTechnology.ASPNetMVC));
-            Persons.Add(new Person("Lependu", "Thierry", Person.eSex.Masculin, 1995, Person.eITLevel.Avancé, Person.eLocation.Présentiel, 3, "", Person.eTechnology.None));
+            Persons.Add(new Person("Lependu", "Thierry", Person.eSex.Masculin, 1995, Person.eITLevel.Avancé, Person.eLocation.Présentiel, 3, "Gestion de centre de formation", Person.eTechnology.ASPNetMVC));
             Persons.Add(new Person("Diaby", "Alhousseny", Person.eSex.Masculin, 2000, Person.eITLevel.Intermédiaire, Person.eLocation.Présentiel, 5, "Simulateur de trains", Person.eTechnology.ASPNetMVC));
-            Persons.Add(new Person("Sadat", "Lyes", Person.eSex.Masculin, 1987, Person.eITLevel.Débutant, Person.eLocation.Présentiel, 3, "", Person.eTechnology.None));
-            Persons.Add(new Person("Haj kacem", "Slim", Person.eSex.Masculin, 1986, Person.eITLevel.Avancé, Person.eLocation.Présentiel, 2, "Gestion de centre de formation", Person.eTechnology.None));
+            Persons.Add(new Person("Sadat", "Lyes", Person.eSex.Masculin, 1987, Person.eITLevel.Débutant, Person.eLocation.Présentiel, 3, "Gestion de centre de formation", Person.eTechnology.ASPNetMVC));
+            Persons.Add(new Person("Haj kacem", "Slim", Person.eSex.Masculin, 1986, Person.eITLevel.Avancé, Person.eLocation.Présentiel, 2, "Gestion de centre de formation", Person.eTechnology.ASPNetMVC));
             Persons.Add(new Person("Aliouchouche", "Tarek", Person.eSex.Masculin, 1971, Person.eITLevel.Intermédiaire, Person.eLocation.Présentiel, 1, "Site de e-Commerce", Person.eTechnology.ASPNetMVC));
             Persons.Add(new Person("Ait Ben Ahmed", "Mohamed", Person.eSex.Masculin, 1986, Person.eITLevel.Intermédiaire, Person.eLocation.Présentiel, 5, "Simulateur de trains", Person.eTechnology.ASPNetMVC));
         }

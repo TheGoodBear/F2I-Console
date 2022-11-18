@@ -6,11 +6,12 @@ namespace CarRace3D
     {
 
         // global variables
-        public static string FilePath =
-            "C:\\Users\\FORMATEUR\\Documents\\F2I\\";
-        //string assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        static string AssemblyPath = 
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        static string FilePath = Path.Combine(AssemblyPath, "Tracks");
         public static string FileName =
             "Track1.txt";
+
         const int ViewWidth = 100;
         const int ViewHeight = 40;
         const int TextLineOrigin = 2;
@@ -35,6 +36,7 @@ namespace CarRace3D
             InitializeTrack();
             Utilities.WriteFile(FilePath, FileName, Track);
             //StartProgram();
+            GameLoop();
 
             //PrepareRace();
             //DrawTrack(NumberOfRacers, OriginY:TrackLineOrigin);
@@ -136,6 +138,18 @@ namespace CarRace3D
             Console.WriteLine("\nEntrée pour démarrer la course...");
             Console.ReadLine();
         }
+
+        private static void GameLoop()
+        {
+            // main game loop
+            bool GameInProgress = true;
+            do
+            {
+                ConsoleKey KeyPressed = Utilities.GetKey();
+
+            } while (GameInProgress);
+        }
+
 
         //private static void PrepareRace()
         //{
