@@ -17,6 +17,7 @@ namespace CarRace3D
         const int TextLineOrigin = 2;
         static int TrackWidth = 60;
         static int TrackX = (ViewWidth - TrackWidth) / 2;
+
         static int RaceLength = 1000;
         const int TurnChance = 5;
         const int KeepTurningMinimum = 50;
@@ -27,14 +28,17 @@ namespace CarRace3D
         const int MinimumWidth = 20;
         const int MaximumWidth = 60;
 
+        static int CarSpeed = 250;
+        static int CarX = ViewWidth / 2;
+
         static List<Tuple<int, int>> Track = new List<Tuple<int, int>>();
         static Random rnd = new Random();
 
         public static void Main()
         {
 
-            InitializeTrack();
-            Utilities.WriteFile(FilePath, FileName, Track);
+            //InitializeTrack();
+            //Utilities.WriteFile(FilePath, FileName, Track);
             //StartProgram();
             GameLoop();
 
@@ -145,7 +149,41 @@ namespace CarRace3D
             bool GameInProgress = true;
             do
             {
-                ConsoleKey KeyPressed = Utilities.GetKey();
+
+                Console.CursorVisible = false;
+
+                Console.SetCursorPosition(40, 2);
+                Console.Write($"Car : speed = {CarSpeed / 50}, position = {CarX}");
+
+                int Counter = 0;
+                while (Console.KeyAvailable == false)
+                {
+                    Console.SetCursorPosition(40, 6);
+                    Console.Write(Counter);
+                    Thread.Sleep(CarSpeed); // Loop until input is entered.
+                    Counter++;
+                }
+
+                string KeyPressed = (Console.ReadKey(false)).Key.ToString();
+                //Console.SetCursorPosition(40, 4);
+                //Console.Write($"You pressed the '{KeyPressed}' key.");
+
+                if ((KeyPressed == "Z" || KeyPressed == "UpArrow")
+                    && CarSpeed > 0)
+                        CarSpeed -= 50;
+                else if ((KeyPressed == "X" || KeyPressed == "DownArrow")
+                    && CarSpeed < 250)
+                    CarSpeed += 50;
+
+                if ((KeyPressed == "Q" || KeyPressed == "LeftArrow")
+                    && CarX > 10)
+                    CarX -= 1;
+                else if ((KeyPressed == "D" || KeyPressed == "RightArrow")
+                    && CarX < ViewWidth - 10)
+                    CarX += 1;
+
+                if (KeyPressed == "Escape")
+                    GameInProgress = false;
 
             } while (GameInProgress);
         }

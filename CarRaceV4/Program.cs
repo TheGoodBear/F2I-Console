@@ -94,11 +94,12 @@ namespace CarRaceV3
             Console.WriteLine("\nQue souhaites-tu faire ?");
             Console.WriteLine("1 - Lancer une nouvelle course");
             Console.WriteLine("2 - Voir l'historique des courses");
+            Console.WriteLine("3 - Rejouer une course");
             Console.WriteLine("0 - Quitter le programme");
 
             int UserChoice = Utilities.AskNumber(
                 "Fais ton choix : ",
-                HighestValue: 2);
+                HighestValue: 3);
 
             if (UserChoice == 1)
             {
@@ -110,7 +111,12 @@ namespace CarRaceV3
             }
             else if (UserChoice == 2)
             {
-                ViewHistory();
+                ViewHistory(GetOldRaces());
+            }
+            else if (UserChoice == 3)
+            {
+                ReplayRace(GetOldRaces(true));
+                RaceFinished(false);
             }
             else if (UserChoice == 0)
             {
@@ -213,7 +219,8 @@ namespace CarRaceV3
 
         }
 
-        private static void RaceFinished()
+        private static void RaceFinished(
+            bool SaveData = true)
         {
             Console.SetCursorPosition(0, TrackLineOrigin + Racers.Count + 2);
 
@@ -227,21 +234,24 @@ namespace CarRaceV3
                 Racer.DisplayData(true, true);
             }
 
-            // save podium and log to files in Save folder
-            string FileName = $"Race-{DateTime.Now.ToString("yyyyMMdd-HHmmss")}";
-            Utilities.WriteFiles(FilePath, FileName, Racers, RaceLength, RaceLog);
+            if (SaveData)
+            {
+                // save podium and log to files in Save folder
+                string FileName = $"Race-{DateTime.Now.ToString("yyyyMMdd-HHmmss")}";
+                Utilities.WriteFiles(FilePath, FileName, Racers, RaceLength, RaceLog);
+            }
 
-            //// save race log in save folder
-            //FileName = $"Race-{DateTime.Now.ToString("yyyyMMdd-HHmmss")}.log";
-            //Utilities.WriteFile(FilePath, FileName, RaceLog, Racers.Count, RaceLength, true);
         }
 
-        private static void ViewHistory()
+
+        private static Tuple<string[], int> GetOldRaces(
+            bool Replay = false)
         {
+            string FileExtension = (Replay ? "*.log" : "*.csv");
 
             // get old races file list
             string[] OldRaces = Directory
-                .GetFiles(FilePath, "*.csv")
+                .GetFiles(FilePath, FileExtension)
                 .OrderByDescending(s => Path.GetFileName(s))
                 .ToArray();
 
@@ -250,7 +260,7 @@ namespace CarRaceV3
                 Console.WriteLine("\nIl n'y a aucune course à voir.");
                 Console.WriteLine("\nEntrée pour revenir au menu");
                 Console.ReadLine();
-                return;
+                return null;
             }
 
             Console.Clear();
@@ -278,14 +288,23 @@ namespace CarRaceV3
                 1,
                 OldRaces.Length);
 
+            // return race number
+            return new Tuple<string[], int>(OldRaces, UserChoice);
+
+        }
+
+        private static void ViewHistory(
+            Tuple<string[], int> RaceFile)
+        {
+
             // show race details
-            using StreamReader MyStream2 = new StreamReader(
-                OldRaces[UserChoice - 1], Encoding.UTF8);
+            using StreamReader MyStream = new StreamReader(
+                RaceFile.Item1[RaceFile.Item2 - 1], Encoding.UTF8);
             {
-                string[] MetaDataList = MyStream2.ReadLine().Split(";");
+                string[] MetaDataList = MyStream.ReadLine().Split(";");
                 Console.WriteLine($"\nDétails de la course de {MetaDataList[1]}km avec {MetaDataList[0]} participants");
 
-                string Racer = MyStream2.ReadLine();
+                string Racer = MyStream.ReadLine();
                 while (Racer != null)
                 {
                     string[] RacerData = Racer.Split(";");
@@ -296,13 +315,96 @@ namespace CarRaceV3
                     //Console.ForegroundColor = (ConsoleColor)Convert.ToInt32(RacerData[3]);
 
                     Console.WriteLine($"{RacerData[0]} → {RacerData[1]} {RacerData[2]} de {RacerData[4]}cv");
-                    Racer = MyStream2.ReadLine();
+                    Racer = MyStream.ReadLine();
                 }
             };
 
             Console.ResetColor();
             Console.WriteLine("\nEntrée pour revenir au menu");
             Console.ReadLine();
+
+        }
+
+        private static void ReplayRace(
+            Tuple<string[], int> RaceFile)
+        {
+
+            // get race data from file
+            using StreamReader MyStream = new StreamReader(
+                RaceFile.Item1[RaceFile.Item2 - 1], Encoding.UTF8);
+            {
+                // read race meta data
+                string[] MetaDataList = MyStream.ReadLine().Split(";");
+                NumberOfRacers = Convert.ToInt32(MetaDataList[0]);
+                RaceLength = Convert.ToInt32(MetaDataList[1]) * 1000;
+                Console.WriteLine($"\nReplay de la course de {RaceLength / 1000}km avec {NumberOfRacers} participants");
+
+                // read racers meta data
+                Racers.Clear();
+                for (int i = 1; i <= Convert.ToInt32(MetaDataList[0]); i++)
+                {
+                    string Racer = MyStream.ReadLine();
+                    string[] RacerData = Racer.Split(";");
+                    Racers.Add(new Vehicle(
+                        RacerData[1],
+                        RacerData[2],
+                        (ConsoleColor)Enum.Parse(typeof(ConsoleColor), RacerData[3]),
+                        Convert.ToInt32(RacerData[5]),
+                        Convert.ToInt32(RacerData[0]),
+                        RacerData[4]));
+                }
+
+                // read race log
+                RaceLog.Clear();
+                string Log = MyStream.ReadLine();
+                while (Log != null)
+                {
+                    string[] LogData = Log.Split(";");
+                    RaceLog.Add(new Tuple<int, int>(Convert.ToInt32(LogData[0]), Convert.ToInt32(LogData[1])));
+                    Log = MyStream.ReadLine();
+                }
+
+            };
+
+            Console.Clear();
+            Console.CursorVisible = false;
+            DrawTrack(NumberOfRacers, OriginY: TrackLineOrigin);
+            Vehicle.NextPodiumNumber = 0;
+            Vehicle.UniqueNumber = Racers.Count;
+
+            Console.SetCursorPosition(0, TrackLineOrigin + Racers.Count + 2);
+            Console.WriteLine($"\nLes {Racers.Count} concurrents sont sur la ligne de départ... Entrée pour démarrer la course.");
+            ShowRacers(0);
+            Console.ReadLine();
+
+            int RoundNumber = 0;
+            int LogNumber = 0;
+            foreach (Tuple<int, int> LogData in RaceLog)
+            {
+
+                // move vehicles
+                Vehicle CurrentRacer = Racers.First
+                    (r => r.UniqueNumberInRace == LogData.Item1);
+                CurrentRacer.DistanceFromOrigin = LogData.Item2;
+
+                if (CurrentRacer.DistanceFromOrigin >= RaceLength
+                    && CurrentRacer.PodiumNumber == 0)
+                {
+                    Vehicle.NextPodiumNumber++;
+                    CurrentRacer.PodiumNumber = Vehicle.NextPodiumNumber;
+                }
+
+                LogNumber++;
+                if (LogNumber % Racers.Count == 0)
+                {
+                    ShowRacers(RoundNumber);
+                    RoundNumber++;
+                    // attendre le prochain tour
+                    Thread.Sleep(100);
+
+                }
+
+            }
 
         }
 

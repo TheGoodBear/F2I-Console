@@ -32,12 +32,16 @@
             string Brand,
             string Model,
             ConsoleColor Color,
-            int HorsePower)
+            int HorsePower,
+            int UniqueNumberInRace = 0,
+            string Image = "|  ►")
         {
             this.Brand = Brand;
             this.Model = Model;
             this.Color = Color;
             this.HorsePower = HorsePower;
+            this.UniqueNumberInRace = UniqueNumberInRace;
+            this.Image = Image;
         }
         public Vehicle(
             Vehicle InitialVehicle)
