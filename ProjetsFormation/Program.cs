@@ -1,13 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using ProjetsFormation.Models;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ProjetsFormation
 {
@@ -17,7 +11,7 @@ namespace ProjetsFormation
         static string AssemblyPath = Path.GetDirectoryName(
             Assembly.GetExecutingAssembly().Location);
         static string FilePath = Path.Combine(AssemblyPath, "Data");
-        static SqlConnection Conn = null;
+        static SqlConnection DBConnection = null;
 
         public static List<Person> Persons = new List<Person>();
         public static List<Group> Groups = new List<Group>();
@@ -28,12 +22,11 @@ namespace ProjetsFormation
         {
             GetDataFromFiles();
             //PrintCollections();
-            Conn = ConnectToSQLServer();
-            InsertData(Conn);
+            DBConnection = ConnectToSQLServer();
+            InsertData(DBConnection);
 
-            Conn.Close();
-            Conn.Dispose();
-
+            DBConnection.Close();
+            DBConnection.Dispose();
         }
 
 
@@ -83,7 +76,7 @@ namespace ProjetsFormation
                 }
             }
 
-            Console.WriteLine($"Le fichier {FileName} a été lu.\n");
+            Console.WriteLine($"\nLe fichier {FileName} a été lu.");
         }
 
 
@@ -93,8 +86,8 @@ namespace ProjetsFormation
 
             //var datasource = @"DESKTOP-PC\SQLEXPRESS";//your server
             var database = "ProjectsFormation"; //your database name
-            var username = "sa"; //username of server to connect
-            var password = "password"; //password
+            //var username = "sa"; //username of server to connect
+            //var password = "password"; //password
 
             //your connection string 
             //string connString = @"Data Source=" + datasource + ";Initial Catalog="
@@ -105,14 +98,15 @@ namespace ProjetsFormation
                 "Initial Catalog=" + database + ";";
 
             //create instanace of database connection
-            SqlConnection Conn = new SqlConnection(ConnectionString);
+            SqlConnection DBConnection =
+                new SqlConnection(ConnectionString);
 
             try
             {
                 Console.WriteLine("Opening Connection ...");
 
                 //open connection
-                Conn.Open();
+                DBConnection.Open();
 
                 Console.WriteLine("Connection successful!");
             }
@@ -122,21 +116,22 @@ namespace ProjetsFormation
                 return null;
             }
 
-            return Conn;
+            return DBConnection;
         }
 
         public static void InsertData(
-            SqlConnection Conn)
+            SqlConnection DBConnection)
         {
             //create a new SQL Query using StringBuilder
-            
+
             // for Project table
             StringBuilder strBuilder = new StringBuilder();
             strBuilder.Append(
                 "INSERT INTO [Project] " +
-                "(Name, Description) VALUES ");
+                "([Name], [Description]) VALUES ");
             for (int Line = 0; Line < Projects.Count; Line++)
             {
+                // .Replace("'", "''") because SQL use ' to delimit strings (and not " as in C#)
                 strBuilder.Append(
                     $"(N'{Projects[Line].Name.Replace("'", "''")}', " +
                     $"N'{Projects[Line].Description.Replace("'", "''")}')");
@@ -144,7 +139,7 @@ namespace ProjetsFormation
                     strBuilder.Append(", ");
             }
             string SQLQuery = strBuilder.ToString();
-            ExecuteSQLNonQuery(Conn, SQLQuery);
+            ExecuteSQLNonQuery(DBConnection, SQLQuery);
 
             // for Group table
             strBuilder = new StringBuilder();
@@ -158,11 +153,11 @@ namespace ProjetsFormation
                     $"N'{Groups[Line].Name.Replace("'", "''")}', " +
                     $"{(int)Groups[Line].Technology}, " +
                     $"{Groups[Line].IdProject})");
-            if (Line < Groups.Count - 1)
+                if (Line < Groups.Count - 1)
                     strBuilder.Append(", ");
             }
             SQLQuery = strBuilder.ToString();
-            ExecuteSQLNonQuery(Conn, SQLQuery);
+            ExecuteSQLNonQuery(DBConnection, SQLQuery);
 
             // for Person table
             strBuilder = new StringBuilder();
@@ -183,20 +178,27 @@ namespace ProjetsFormation
                     strBuilder.Append(", ");
             }
             SQLQuery = strBuilder.ToString();
-            ExecuteSQLNonQuery(Conn, SQLQuery);
+            ExecuteSQLNonQuery(DBConnection, SQLQuery);
 
             strBuilder.Clear();
         }
 
         private static void ExecuteSQLNonQuery(
-            SqlConnection Conn,
+            SqlConnection DBConnection,
             string SQLQuery)
         {
 
-            using (SqlCommand command = new SqlCommand(SQLQuery, Conn)) //pass SQL query created above and connection
+            try
             {
-                int Lines = command.ExecuteNonQuery(); //execute the Query
-                Console.WriteLine($"\n{Lines} enregistrements ont été traités par la requête\n{SQLQuery}");
+                using (SqlCommand Command = new SqlCommand(SQLQuery, DBConnection)) //pass SQL query created above and connection
+                {
+                    int Lines = Command.ExecuteNonQuery(); //execute the Query
+                    Console.WriteLine($"\n{Lines} enregistrements ont été traités par la requête\n{SQLQuery}");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
             }
         }
 
