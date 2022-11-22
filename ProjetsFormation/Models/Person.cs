@@ -1,4 +1,4 @@
-﻿namespace ProjetsFormation
+﻿namespace ProjetsFormation.Models
 {
     public class Person
     {
@@ -15,13 +15,6 @@
             Intermédiaire,
             Avancé
         }
-        public enum eTechnology
-        {
-            None,
-            ASPNetMVC,
-            MAUI,
-            UWP
-        }
         public enum eLocation
         {
             Présentiel,
@@ -29,16 +22,15 @@
         }
 
         // raed/write (get/set) properties
+        public int Id { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public eSex Sex { get; set; }
         public int BirthYear { get; set; }
         public eITLevel ITLevel { get; set; }
         public eLocation Location { get; set; }
-        public int GroupNumber { get; set; }
-        public string ProjectName { get; set; }
-        public eTechnology Technology { get; set; }
-        
+        public int IdGroup { get; set; }
+
         // read only (get) properties
         public int Age => DateTime.Now.Year - BirthYear;
 
@@ -50,9 +42,7 @@
             int BirthYear,
             eITLevel ITLevel,
             eLocation Location,
-            int GroupNumber,
-            string ProjectName,
-            eTechnology Technology)
+            int IdGroup)
         {
             this.LastName = LastName;
             this.FirstName = FirstName;
@@ -60,9 +50,25 @@
             this.BirthYear = BirthYear;
             this.ITLevel = ITLevel;
             this.Location = Location;
-            this.GroupNumber = GroupNumber;
-            this.ProjectName = ProjectName;
-            this.Technology = Technology;
+            this.IdGroup = IdGroup;
         }
+        public Person(
+            string[] Data)
+        {
+            this.LastName = Data[0];
+            this.FirstName = Data[1];
+            this.Sex = (eSex)Convert.ToInt32(Data[2]);
+            this.BirthYear = Convert.ToInt32(Data[3]);
+            this.ITLevel = (eITLevel)Convert.ToInt32(Data[4]);
+            this.Location = (eLocation)Convert.ToInt32(Data[5]);
+            this.IdGroup = Convert.ToInt32(Data[6]);
+        }
+
+
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName}";
+        }
+
     }
 }

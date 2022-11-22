@@ -1,0 +1,4 @@
+﻿How to connect to SQL Server
+https://qawithexperts.com/article/c-sharp/connect-to-sql-server-in-c-example-using-console-application/178
+
+Nuget Package : Microsoft.Data.SQLClient (latest one)

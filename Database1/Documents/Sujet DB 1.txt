@@ -1,0 +1,9 @@
+﻿Sujet de base de données
+------------------------
+
+1) Etape 1
+
+Je souhaite pouvoir gérer des animaux
+Chaque animal a un nom et une description
+Chaque animal appartient à une et une seule catégorie
+Chaque catégorie a un nom

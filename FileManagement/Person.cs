@@ -1,4 +1,4 @@
-﻿namespace FileManagement
+﻿namespace ProjetsFormation
 {
     public class Person
     {

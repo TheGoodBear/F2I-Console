@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Text;
 
-namespace FileManagement
+namespace ProjetsFormation
 {
     internal class Program
     {
