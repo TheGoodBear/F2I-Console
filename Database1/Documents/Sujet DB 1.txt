@@ -10,9 +10,11 @@ Chaque catégorie a un nom
 
 2) Etape 2
 
-Créer une liste de personnes avec Nom, Prénom, Sexe
-Créer une liste de pays avec Nom, Lien vers l'image du drapeau
-Chaque Animal peut être présent dans 0 à plusieurs (n) pays
+Créer une liste de Personnes avec Nom, Prénom, Sexe
+Créer une liste de Pays avec Nom, Lien vers l'image du drapeau
+Chaque Animal peut être présent dans 0 à plusieurs (n) Pays
 Chaque Pays peut contenir 0 à n Animal
 Chaque Personne peut avoir observé un Animal dans un Pays donné, à une date donnée
 
+3 - Etape 3
+Les catégories sont représentées en arborescence
