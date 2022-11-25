@@ -128,7 +128,8 @@ namespace ProjetsFormation
             StringBuilder strBuilder = new StringBuilder();
             strBuilder.Append(
                 "INSERT INTO [Project] " +
-                "([Name], [Description]) VALUES ");
+                "([Name], [Description]) " +
+                "VALUES ");
             for (int Line = 0; Line < Projects.Count; Line++)
             {
                 // .Replace("'", "''") because SQL use ' to delimit strings (and not " as in C#)

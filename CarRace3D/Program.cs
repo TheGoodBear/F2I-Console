@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
+using CarRace2D.Code_files;
 
-namespace CarRace3D
+namespace CarRace2D
 {
     public class Program
     {
@@ -28,8 +29,15 @@ namespace CarRace3D
         const int MinimumWidth = 20;
         const int MaximumWidth = 60;
 
-        static int CarSpeed = 250;
+        const int CarSpeedMin = 25;
+        const int CarSpeedMax = 150;
+        static int CarSpeed = CarSpeedMax;
+        const int CarSpeedStep = 25;
+        const int CarXMin = 10;
+        const int CarXMax = ViewWidth - CarXMin;
         static int CarX = ViewWidth / 2;
+        static int CarY = 10;
+        const string CarImage = "Ö";
 
         static List<Tuple<int, int>> Track = new List<Tuple<int, int>>();
         static Random rnd = new Random();
@@ -38,6 +46,7 @@ namespace CarRace3D
         {
 
             //InitializeTrack();
+            //Utilities.GetClassProperties<Person>();
             //Utilities.WriteFile(FilePath, FileName, Track);
             //StartProgram();
             GameLoop();
@@ -146,16 +155,13 @@ namespace CarRace3D
         private static void GameLoop()
         {
             // main game loop
+            Console.CursorVisible = false;
+            int Counter = 0;
             bool GameInProgress = true;
             do
             {
+                DisplayDashboard();
 
-                Console.CursorVisible = false;
-
-                Console.SetCursorPosition(40, 2);
-                Console.Write($"Car : speed = {CarSpeed / 50}, position = {CarX}");
-
-                int Counter = 0;
                 while (Console.KeyAvailable == false)
                 {
                     Console.SetCursorPosition(40, 6);
@@ -164,26 +170,12 @@ namespace CarRace3D
                     Counter++;
                 }
 
-                string KeyPressed = (Console.ReadKey(false)).Key.ToString();
+                // a key was pressed
+                string ActionKey = (Console.ReadKey(false)).Key.ToString();
                 //Console.SetCursorPosition(40, 4);
                 //Console.Write($"You pressed the '{KeyPressed}' key.");
 
-                if ((KeyPressed == "Z" || KeyPressed == "UpArrow")
-                    && CarSpeed > 0)
-                        CarSpeed -= 50;
-                else if ((KeyPressed == "X" || KeyPressed == "DownArrow")
-                    && CarSpeed < 250)
-                    CarSpeed += 50;
-
-                if ((KeyPressed == "Q" || KeyPressed == "LeftArrow")
-                    && CarX > 10)
-                    CarX -= 1;
-                else if ((KeyPressed == "D" || KeyPressed == "RightArrow")
-                    && CarX < ViewWidth - 10)
-                    CarX += 1;
-
-                if (KeyPressed == "Escape")
-                    GameInProgress = false;
+                GameInProgress = DoAction(ActionKey);
 
             } while (GameInProgress);
         }
@@ -305,6 +297,56 @@ namespace CarRace3D
             //Console.SetCursorPosition(OriginX, OriginY + NumberOfLines + 1);
             //Console.Write(new String('■', 110));
 
+        }
+
+
+        private static void DrawCar(
+            int CarXOld,
+            int CarYOld,
+            int CarX,
+            int CarY) 
+        {
+            Console.SetCursorPosition(CarXOld, CarYOld);
+            Console.Write(" ");
+
+            Console.SetCursorPosition(CarX, CarY);
+            Console.Write(CarImage);
+        }
+
+
+        private static void DisplayDashboard()
+        {
+            Console.SetCursorPosition(40, 2);
+            Console.Write($"Car : speed = {CarSpeed / CarSpeedStep}, position = {CarX}");
+        }
+
+        private static bool DoAction(
+            string ActionKey) 
+        {
+            // change speed
+            if ((ActionKey == "Z" || ActionKey == "UpArrow")
+                && CarSpeed > CarSpeedMin)
+                CarSpeed -= CarSpeedStep;
+            else if ((ActionKey == "X" || ActionKey == "DownArrow")
+                && CarSpeed < CarSpeedMax)
+                CarSpeed += CarSpeedStep;
+
+            // move left/right
+            int CarXStep = 0;
+            int CarYStep = 0;
+            if ((ActionKey == "Q" || ActionKey == "LeftArrow")
+                && CarX > CarXMin)
+                CarXStep = -1;
+            else if ((ActionKey == "D" || ActionKey == "RightArrow")
+                && CarX < CarXMax)
+                CarXStep = 1;
+
+            DrawCar(CarX, CarY, CarX + CarXStep, CarY + CarYStep);
+            CarX += CarXStep;
+            CarY += CarYStep;
+
+            // end game
+            return !(ActionKey == "Escape");
         }
     }
 }

@@ -40,6 +40,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database1", "Database1\Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjetsFormation", "ProjetsFormation\ProjetsFormation.csproj", "{012A26B0-419B-4FAC-9041-812E0777AE67}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database recursive", "Database recursive\Database recursive.csproj", "{7F04F4D2-0DFC-4BCF-ADE8-61936036CE1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "POO2", "POO2\POO2.csproj", "{9DDFD5BD-1CCF-4BA9-8EE2-A78073FCFC04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -110,6 +114,14 @@ Global
 		{012A26B0-419B-4FAC-9041-812E0777AE67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{012A26B0-419B-4FAC-9041-812E0777AE67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{012A26B0-419B-4FAC-9041-812E0777AE67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F04F4D2-0DFC-4BCF-ADE8-61936036CE1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F04F4D2-0DFC-4BCF-ADE8-61936036CE1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F04F4D2-0DFC-4BCF-ADE8-61936036CE1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F04F4D2-0DFC-4BCF-ADE8-61936036CE1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DDFD5BD-1CCF-4BA9-8EE2-A78073FCFC04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DDFD5BD-1CCF-4BA9-8EE2-A78073FCFC04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DDFD5BD-1CCF-4BA9-8EE2-A78073FCFC04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DDFD5BD-1CCF-4BA9-8EE2-A78073FCFC04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
