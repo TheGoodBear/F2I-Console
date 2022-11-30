@@ -1,0 +1,25 @@
+﻿Gestion de données récursives
+-----------------------------
+
+1 - Créer une table Category contenant les champs suivants
+	ID (int, PK)
+	Name (NVarchar(30), not null)
+	Description (NVarchar(100), null)
+	IDParentCategory (int, FK, null)
+
+2 - Créer une méthode en C# pour alimenter la table Category à partir du fichier "Classification des animaux.txt"
+    - Lire le fichier texte
+	- Le parser (découper correctement les données)
+	- Insérer les données dans la table Category (grâce à du SQL)
+	- Note : les données entre parenthèses constituent la description
+		Exemple : 
+			Tétrapode (Quatre membres) : 
+			Name = Tétrapode
+			Description = Quatre membres
+
+3 - Créer une méthode en C# qui lise les données depuis la base et les ajoutent dans une collection appropriée
+    - Note : il est nécessaire de créer un modèle C# correspondant à la table Category
+
+4 - Créer une méthode affichant (en console) les données de cette collection telles que présentées dans le fichier "Classification des animaux.txt"
+
+5 - Modifier la méthode ci-dessus pour coller cette fois-ci à la représentation avancée (voir fichier "Classification des animaux - représentation avancée.txt")

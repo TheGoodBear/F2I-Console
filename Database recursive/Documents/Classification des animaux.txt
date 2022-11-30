@@ -1,0 +1,32 @@
+﻿└ Vertébré (Squelette interne)
+  └ Ostéichthyen (Squelette d'os)
+    └ Tétrapode (Quatre membres)
+      └ À gésier
+        └ Oiseau
+        └ Crocodilien
+      └ Mammifère (Poils et mamelles)
+        └ Canidé
+        └ Félin
+        └ Primate
+        └ Ruminant
+          └ Bovin
+          └ Caprin
+          └ Ovin
+      └ Chélonien (Carapace)
+      └ Squamate (Large mâchoire)
+      └ Lyssamphibien (Quatre doigts)                  
+    └ Actinoptérygien (Poisson à squellete osseux)
+  └ Chondrichthyen (Squelette de cartilage)
+└ Arthropode (Squelette externe et pattes articulées)
+  └ À 2 antennes
+    └ Myriapode (Nombreuses paires de pattes)
+    └ Insecte (Six paires de pattes)
+  └ Arachnide
+  └ Crustacé
+└ Mollusque (Coquille visible ou cachée)
+  └ Céphalopode (Tentacules sur la tête)
+  └ Gastéropode (Pied porteur)
+  └ Bivalve (Coquille en deux parties)
+└ Équinoderme (Squelette dans la peau)
+└ Cnidaire (Harpons urticans)
+└ Annélide (Corps à anneaux)
