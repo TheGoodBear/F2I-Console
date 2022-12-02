@@ -46,8 +46,14 @@ namespace CarRace2D.Code_files
             List<Tuple<int, int>> DataList)
         {
 
+            if (!Directory.Exists(FilePath))
+                Directory.CreateDirectory(FilePath);
+
+            FileName = FileName.Replace("<>", 
+                DateTime.Now.ToString("yyyyMMdd-HHmmss") + "-" + DataList.Count.ToString());
+
             using StreamWriter? MyStream = new StreamWriter(
-                FilePath + FileName,
+                FilePath + "\\" + FileName,
                 false,
                 Encoding.UTF8);
             {
