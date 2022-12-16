@@ -1,6 +1,9 @@
 ﻿using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
 using CarRace2D.Code_files;
 using CarRace2D.Models;
+using CarRace2D.Code_files;
 
 namespace CarRace2D;
 
@@ -17,21 +20,15 @@ public class Program
 
     public static void Main()
     {
+        //Test();
 
         StartProgram();
+        
         Game.PrepareRace();
 
         Game.Loop();
 
-        //DrawTrack(NumberOfRacers, OriginY:TrackLineOrigin);
-        //ShowRacers();
-        //RaceInProgress();
-        //RaceFinished();
-
-        // fin du programme
-        Console.SetCursorPosition(0, 32);
-        Console.WriteLine("Entrée pour terminer.");
-        Console.ReadLine();
+        EndProgram();
 
     }
 
@@ -45,10 +42,10 @@ public class Program
 
         Console.WriteLine("\nL'objectif est d'atteindre la ligne d'arrivée en un minimum de temps sans avoir d'accident.");
         Console.WriteLine("\nCommandes du véhicule :");
-        Console.WriteLine($"Accélerer : (Z) ou (↑)");
-        Console.WriteLine($"Ralentir : (X) ou (↓)");
-        Console.WriteLine($"Tourner à gauche : (Q) ou (←)");
-        Console.WriteLine($"Tourner à droite : (D) ou (→)");
+        Console.WriteLine($"Accélerer : (Z) ou (▲)");
+        Console.WriteLine($"Ralentir : (X) ou (▼)");
+        Console.WriteLine($"Tourner à gauche : (Q) ou (◄)");
+        Console.WriteLine($"Tourner à droite : (D) ou (►)");
         Console.WriteLine("\nEntrée pour démarrer la course...");
         Console.ReadLine();
 
@@ -56,6 +53,31 @@ public class Program
     }
 
 
+    private static void EndProgram()
+    {
+
+        // fin du programme
+        Console.ResetColor();
+        Console.SetCursorPosition(30, 40);
+        Console.WriteLine("Entrée pour terminer.");
+        Console.ReadLine();
+    }
+
+    static void Test()
+        {
+            Console.Clear();
+
+            Console.CursorLeft = 0;
+            Console.CursorTop = 1;
+            Console.Write("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+            char? first = Utilities.GetCharacterAt(10, 1);
+            char? second = Utilities.GetCharacterAt(20, 1);
+
+        Console.WriteLine($"\n{first} - {second}");
+
+        Console.ReadLine();
+        }
 
 
     //private static void RaceFinished()

@@ -106,13 +106,15 @@ internal static class Track
     }
 
 
-    internal static void Draw()
+    internal static bool Draw()
     {
 
         // dessin de la piste de course
         Tuple<int, int> Step = Data[Data.Count - 1];
         int X = Step.Item1;
         int Width = Step.Item2;
+
+        Car.Draw(false);
 
         Console.MoveBufferArea(
             0, StartY,
@@ -124,14 +126,13 @@ internal static class Track
         Console.SetCursorPosition(X + Width, StartY);
         Console.Write(BorderStyle);
 
+        return Car.Draw();
+
         //Console.WriteLine(
         //    new string(' ', TrackStep.Item1)
         //    + TrackBorder
         //    + new string(' ', TrackStep.Item2)
         //    + TrackBorder);
-
-        Thread.Sleep(10);
-
 
     }
 

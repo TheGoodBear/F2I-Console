@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarRace2D.Code_files;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,13 @@ internal static class Car
     internal static int X = View.Width / 2;
     internal static int Y = 10;
     const string Image = "Ö";
+
+    public enum eDraw
+    {
+        Hide,
+        Show,
+        Both
+    }
 
 
     internal static void ChangeSpeed(
@@ -43,9 +51,10 @@ internal static class Car
             || (XStep == 1 && X > XMax))
             XStep = 0;
 
-        Draw(X, Y, X + XStep, Y + YStep);
+        Draw(false);
         X += XStep * CurrentXStep;
         Y += YStep;
+        Draw();
     }
 
 
@@ -53,24 +62,30 @@ internal static class Car
     {
         for (int Line = 1; Line <= Track.LineStartY ;Line++)
         {
-            int NewY = Track.StartY + Track.Height - Line;
-            Draw(X, Y, X, NewY);
-            Y = NewY;
+            Draw(false);
+            Y = Track.StartY + Track.Height - Line;
+            Draw();
             Thread.Sleep(250);
         }
     }
 
-    private static void Draw(
-        int XOld,
-        int YOld,
-        int X,
-        int Y)
+    internal static bool Draw(
+        bool Show = true)
     {
-        Console.SetCursorPosition(XOld, YOld);
-        Console.Write(" ");
+        bool Crash = false;
 
         Console.SetCursorPosition(X, Y);
-        Console.Write(Image);
+        string CarImage = " ";
+
+        if (Show)
+        {
+            CarImage = Image;
+            Crash = (Utilities.GetCharacterAt(X, Y).ToString() != " ");
+        }
+
+        Console.Write(CarImage);
+
+        return Crash;
     }
 
 }

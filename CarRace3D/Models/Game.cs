@@ -4,6 +4,7 @@ internal static class Game
 {
 
     internal static int CurrentRound = 0;
+    internal static int CurrentDifficulty = 1;
     internal static Tuple<int, int> RoundParameters =
         new Tuple<int, int>(0, 0);
 
@@ -36,18 +37,20 @@ internal static class Game
     {
         // main game loop
         Console.CursorVisible = false;
-        int Counter = 0;
         bool GameInProgress;
+        bool Crash = false;
         do
         {
-            DisplayDashboard();
 
             while (Console.KeyAvailable == false)
             {
-                Console.SetCursorPosition(40, 6);
-                Console.Write(Counter);
+                DisplayDashboard();
+                CurrentRound++;
+
+                Track.Create();
+                Crash = Track.Draw();
+
                 Thread.Sleep(Car.Speed); // Loop until input is entered.
-                Counter++;
             }
 
             // a key was pressed
@@ -57,14 +60,20 @@ internal static class Game
 
             GameInProgress = DoAction(ActionKey);
 
-        } while (GameInProgress);
+        } while (GameInProgress && !Crash);
+
+        if (Crash)
+            CarCrashed();
+
     }
 
 
     private static void DisplayDashboard()
     {
-        Console.SetCursorPosition(40, 2);
-        Console.Write($"Car : speed = {Car.Speed / Car.SpeedStep}, position = {Car.X}");
+        Console.SetCursorPosition(30, 1);
+        Console.Write($"Speed : {Car.Speed / Car.SpeedStep}   Distance : {CurrentRound} m   Difficulty = {CurrentDifficulty}");
+        //Console.SetCursorPosition(40, 2);
+        //Console.Write($"Car position = {Car.X}");
     }
 
 
@@ -85,6 +94,14 @@ internal static class Game
 
         // end game
         return !(ActionKey == "Escape");
+    }
+
+
+    private static void CarCrashed() 
+    {
+        Console.SetCursorPosition(30, 1);
+        Console.BackgroundColor = ConsoleColor.Red;
+        Console.Write($"*** ACCIDENT ***");
     }
 
 }
