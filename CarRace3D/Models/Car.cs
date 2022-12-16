@@ -69,7 +69,7 @@ internal static class Car
         }
     }
 
-    internal static bool Draw(
+    public static bool Draw(
         bool Show = true)
     {
         bool Crash = false;
