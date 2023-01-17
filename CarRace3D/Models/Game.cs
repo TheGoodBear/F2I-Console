@@ -5,8 +5,8 @@ internal static class Game
 
     internal static int CurrentRound = 0;
     internal static int CurrentDifficulty = 1;
-    internal static Tuple<int, int> RoundParameters =
-        new Tuple<int, int>(0, 0);
+    internal static Tuple<int, int, int> RoundParameters =
+        new Tuple<int, int, int>(0, 0, 0);
 
 
     internal static void PrepareRace()
@@ -21,7 +21,7 @@ internal static class Game
 
         // draw start line
         Console.SetCursorPosition(Track.X + 1, Track.StartY + Track.Height - Track.LineStartY - 1);
-        Console.WriteLine(new string(Track.StartLineStyle.ToCharArray()[0], Track.Width - 1));
+        Console.WriteLine(new string(Track.StartLineStyle, Track.Width - 1));
 
         Thread.Sleep(500);
 
@@ -42,7 +42,7 @@ internal static class Game
         do
         {
 
-            while (Console.KeyAvailable == false)
+            while (!Console.KeyAvailable)
             {
                 DisplayDashboard();
                 CurrentRound++;
@@ -50,7 +50,13 @@ internal static class Game
                 Track.Create();
                 Crash = Track.Draw();
 
-                Thread.Sleep(Car.Speed); // Loop until input is entered.
+                if (Crash)
+                {
+                    CarCrashed();
+                    return;
+                }
+
+                Thread.Sleep(Car.Speed); // Loop until input is entered
             }
 
             // a key was pressed
@@ -60,10 +66,7 @@ internal static class Game
 
             GameInProgress = DoAction(ActionKey);
 
-        } while (GameInProgress && !Crash);
-
-        if (Crash)
-            CarCrashed();
+        } while (GameInProgress);
 
     }
 
@@ -99,7 +102,7 @@ internal static class Game
 
     private static void CarCrashed() 
     {
-        Console.SetCursorPosition(30, 1);
+        Console.SetCursorPosition(30, 5);
         Console.BackgroundColor = ConsoleColor.Red;
         Console.Write($"*** ACCIDENT ***");
     }

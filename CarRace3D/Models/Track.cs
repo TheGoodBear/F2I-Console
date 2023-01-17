@@ -16,8 +16,8 @@ internal static class Track
 
     internal static int Width = 60;
     internal static int X = (View.Width - Width) / 2;
-    const string BorderStyle = "▓";
-    internal const string StartLineStyle = "░";
+    internal const char BorderStyle = '▓';
+    internal const char StartLineStyle = '░';
     internal const int StartY = 3;
     internal const int LineStartY = 5;
     internal static int Height = 30;
@@ -41,7 +41,7 @@ internal static class Track
         int Round = Game.CurrentRound;
         int TurnRound = Game.RoundParameters.Item1;
         int ChangeWidthRound = Game.RoundParameters.Item2;
-        int Step = 0;
+        int Step = Game.RoundParameters.Item3; 
 
         Data.Add(new Tuple<int, int>(X, Width));
 
@@ -100,8 +100,8 @@ internal static class Track
         }
 
         // update round parameters
-        Game.RoundParameters = new Tuple<int, int>
-            (TurnRound, ChangeWidthRound);
+        Game.RoundParameters = new Tuple<int, int, int>
+            (TurnRound, ChangeWidthRound, Step);
 
     }
 
@@ -109,23 +109,26 @@ internal static class Track
     internal static bool Draw()
     {
 
-        // dessin de la piste de course
+        // draw track
         Tuple<int, int> Step = Data[Data.Count - 1];
         int X = Step.Item1;
         int Width = Step.Item2;
 
         Car.Draw(false);
 
+        // move track down → simulate car moves forward
         Console.MoveBufferArea(
             0, StartY,
-            View.Width + 10, Height - 1,
+            View.Width - 10, Height - 1,
             0, StartY + 1);
 
+        // draw next track step at top
         Console.SetCursorPosition(X, StartY);
         Console.Write(BorderStyle);
         Console.SetCursorPosition(X + Width, StartY);
         Console.Write(BorderStyle);
 
+        // draw car and check collision
         return Car.Draw();
 
         //Console.WriteLine(

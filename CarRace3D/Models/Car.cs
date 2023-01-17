@@ -74,15 +74,18 @@ internal static class Car
     {
         bool Crash = false;
 
-        Console.SetCursorPosition(X, Y);
         string CarImage = " ";
 
         if (Show)
         {
             CarImage = Image;
-            Crash = (Utilities.GetCharacterAt(X, Y).ToString() != " ");
+            char? CharacterInFront = Utilities.GetCharacterAt(X, Y);
+            Crash = (CharacterInFront != ' ' && Game.CurrentRound > 1);
+            //Console.SetCursorPosition(30, 32);
+            //Console.Write($"Car : X = {X}   Y = {Y}   Character = {Utilities.GetCharacterAt(X, Y)}   Crash = {Crash}");
         }
 
+        Console.SetCursorPosition(X, Y);
         Console.Write(CarImage);
 
         return Crash;
